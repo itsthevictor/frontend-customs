@@ -1,5 +1,11 @@
+import DraggableList from "./components/DraggableList";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <DraggableList />
+    </>
+  );
 }
 
 export default App;
