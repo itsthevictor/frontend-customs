@@ -5,7 +5,7 @@ const AlertComponent = () => {
     Swal.fire({
       title: "Do you want to save the changes?",
       showDenyButton: true,
-      showCancelButton: true,
+      showCancelButton: false,
       confirmButtonText: "Save",
       denyButtonText: `Don't save`,
     }).then((result) => {
