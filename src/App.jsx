@@ -1,9 +1,10 @@
+import AlertComponent from "./components/AlertComponent";
 import DraggableList from "./components/DraggableList";
 
 function App() {
   return (
     <>
-      <DraggableList />
+      <AlertComponent />
     </>
   );
 }
