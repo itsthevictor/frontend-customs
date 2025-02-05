@@ -49,7 +49,7 @@ main h1 {
   color: #212121;
 }
 
-button {
+.btn {
   cursor: pointer;
   padding: 0.5rem 2rem;
   width: 120px;
@@ -62,17 +62,18 @@ button {
 }
 
 .swal2-popup {
-  /* border: 1px solid white !important; */
   background: whitesmoke !important;
 }
 
 .swal2-confirm {
+  cursor: pointer;
   width: 120px;
   background: #1c1c1c;
   border: 2px solid #1c1c1c;
 }
 
 .swal2-deny {
+  cursor: pointer;
   width: 120px;
   background: inherit;
   border: 2px solid #1c1c1c;
@@ -80,6 +81,7 @@ button {
 }
 
 .swal2-cancel {
+  cursor: pointer;
   border: 2px solid grey;
   background: grey;
 }

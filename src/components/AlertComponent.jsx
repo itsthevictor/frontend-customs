@@ -22,7 +22,9 @@ const AlertComponent = () => {
       <div className="container">
         <h2>alert component</h2>
 
-        <button onClick={handleClick}>alert</button>
+        <button className="btn" onClick={handleClick}>
+          alert
+        </button>
       </div>
     </main>
   );
