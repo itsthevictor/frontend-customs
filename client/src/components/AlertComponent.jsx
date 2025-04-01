@@ -19,8 +19,6 @@ const AlertComponent = () => {
   };
   return (
     <div className='alert-container'>
-      <h2 className='w-xs'>alert component</h2>
-
       <button className='btn' onClick={handleClick}>
         alert
       </button>

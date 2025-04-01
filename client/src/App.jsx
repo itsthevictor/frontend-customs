@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Alert from './pages/Alert';
 import DragAndDrop from './pages/DragAndDrop';
-import Superstruct from './pages/Superstruct';
+import Superstruct, { formAction } from './pages/Superstruct';
 import Home from './pages/Home';
 import Header from './components/Header';
 import Main from './layouts/Main';
@@ -28,6 +28,7 @@ function App() {
         {
           path: 'superstruct',
           element: <Superstruct />,
+          action: formAction,
         },
       ],
     },
