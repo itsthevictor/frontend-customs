@@ -9,13 +9,13 @@ const nonEmptyString = (fieldName, errorMessage) =>
 
 // Custom email validator with error message
 const emailValidator = refine(
-  nonEmptyString('Email', 'Email is required.'),
+  nonEmptyString('Email', 'Emailul este obligatoriu.'),
   'email',
   (value) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return (
       emailRegex.test(value) ||
-      'Invalid email format. Please enter a valid email address.'
+      'Formatul emailului este invalid. Vă rugăm să introduceți o adresă de email validă.'
     );
   }
 );
