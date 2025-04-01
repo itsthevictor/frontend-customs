@@ -297,7 +297,8 @@ h6 {
 .form-row label {
   font-size: var(--fs-500);
   margin-bottom: 3px;
-  color: var(--grey-200);
+  color: var(--grey-300);
+  font-weight: 300;
   text-transform: capitalize;
 }
 
@@ -317,7 +318,7 @@ h6 {
 
 .error-msg {
   color: var(--red-100);
-  padding: 2px 5px;
+  padding-top: 2px;
   font-size: var(--fs-500);
 }
 

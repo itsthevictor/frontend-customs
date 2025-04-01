@@ -3,22 +3,22 @@ import { Form, redirect, useActionData } from 'react-router-dom';
 import { assert, object, string, refine, nonempty, number } from 'superstruct';
 
 import { useState } from 'react';
-// Non-empty string validator
-const nonEmptyString = (fieldName) =>
-  refine(
-    string(),
-    fieldName,
-    (value) => value.trim() !== '' || `${fieldName} is required.`
-  );
+// Non-empty string validator with custom error message
+const nonEmptyString = (fieldName, errorMessage) =>
+  refine(string(), fieldName, (value) => value.trim() !== '' || errorMessage);
 
 // Custom email validator with error message
-const emailValidator = refine(nonEmptyString('Email'), 'email', (value) => {
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  return (
-    emailRegex.test(value) ||
-    'Invalid email format. Please enter a valid email address.'
-  );
-});
+const emailValidator = refine(
+  nonEmptyString('Email', 'Email is required.'),
+  'email',
+  (value) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return (
+      emailRegex.test(value) ||
+      'Invalid email format. Please enter a valid email address.'
+    );
+  }
+);
 
 // Custom phone validator
 const phoneValidator = refine(number(), 'phone', (value) => {
@@ -29,7 +29,7 @@ const phoneValidator = refine(number(), 'phone', (value) => {
 
 // Custom password validator
 const passwordValidator = refine(
-  nonEmptyString('Password'),
+  nonEmptyString('Password', 'A password is required.'),
   'password',
   (value) => {
     return value.length >= 6 || 'Password must be at least 6 characters long.';
@@ -37,7 +37,7 @@ const passwordValidator = refine(
 );
 
 const FormSchema = object({
-  name: nonEmptyString('Name'),
+  name: nonEmptyString('Name', 'Please enter your full name.'),
   email: emailValidator,
   phone: refine(number(), 'phone', (value) => {
     return value
@@ -100,7 +100,7 @@ const Superstruct = () => {
         </div>
         <div className='form-row'>
           <label htmlFor='phone'>phone no</label>
-          <input className='input' id='phone' name='phone' type='number' />{' '}
+          <input className='input' id='phone' name='phone' type='string' />{' '}
           {errors?.phone && (
             <small className='error-msg'>{errors?.phone}</small>
           )}
