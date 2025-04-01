@@ -1,14 +1,14 @@
-import { useRef } from "react";
-import { useState } from "react";
+import { useRef } from 'react';
+import { useState } from 'react';
 
 const DraggableList = () => {
   const [array, setArray] = useState([
-    { id: 1, name: "Adam Scout" },
-    { id: 2, name: "Helena Eagon" },
-    { id: 3, name: "Irving Bailiff" },
-    { id: 4, name: "Dylan George" },
-    { id: 5, name: "Harmony Cobel" },
-    { id: 6, name: "Seth Milchick" },
+    { id: 1, name: 'Adam Scout' },
+    { id: 2, name: 'Helena Eagon' },
+    { id: 3, name: 'Irving Bailiff' },
+    { id: 4, name: 'Dylan George' },
+    { id: 5, name: 'Harmony Cobel' },
+    { id: 6, name: 'Seth Milchick' },
   ]);
   const dragItem = useRef(0);
   const draggedOverItem = useRef(0);
@@ -23,13 +23,11 @@ const DraggableList = () => {
   };
 
   return (
-    <main>
-      <h1>list</h1>
-
-      <div className="list">
+    <>
+      <div className='list'>
         {array.map((item, i) => (
           <div
-            className="list-item"
+            className='list-item'
             draggable
             key={i}
             onDragStart={() => (dragItem.current = i)}
@@ -41,7 +39,7 @@ const DraggableList = () => {
           </div>
         ))}
       </div>
-    </main>
+    </>
   );
 };
 export default DraggableList;
