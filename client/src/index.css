@@ -81,6 +81,14 @@ main {
 
   color: hsl(0, 0%, 21%);
 }
+h1,
+h2,
+h4,
+h4,
+h5,
+h6 {
+  font-weight: 300;
+}
 
 .cap {
   text-transform: capitalize;
@@ -311,4 +319,8 @@ main {
   color: var(--red-100);
   padding: 2px 5px;
   font-size: var(--fs-500);
+}
+
+.form-subtitle {
+  color: var(--grey-300);
 }

@@ -72,6 +72,7 @@ const Superstruct = () => {
       <Form className='superstruct-form' method='post'>
         <div className='title'>
           <h2 className='w-xs'>Form</h2>
+          <h5 className='form-subtitle'>validated with superstruct</h5>
         </div>
         <div className='form-row'>
           <label htmlFor='name'>name</label>
