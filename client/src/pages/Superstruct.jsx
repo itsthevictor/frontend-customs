@@ -1,69 +1,71 @@
 import React from 'react';
 import { Form, redirect, useActionData } from 'react-router-dom';
-import {
-  assert,
-  object,
-  string,
-  nonempty,
-  StructError,
-  number,
-} from 'superstruct';
+import { assert, object, string, refine, nonempty, number } from 'superstruct';
 
-const emailRegex = '^[w-.]+@([w-]+.)+[w-]{2,4}$';
+import { useState } from 'react';
+// Non-empty string validator
+const nonEmptyString = (fieldName) =>
+  refine(
+    string(),
+    fieldName,
+    (value) => value.trim() !== '' || `${fieldName} is required.`
+  );
 
-const articleSchema = object({
-  name: nonempty(string()),
-  email: nonempty(string()),
-  password: nonempty(string()),
-  phone: nonempty(number()),
+// Custom email validator with error message
+const emailValidator = refine(nonEmptyString('Email'), 'email', (value) => {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return (
+    emailRegex.test(value) ||
+    'Invalid email format. Please enter a valid email address.'
+  );
 });
 
-export const formAction = async ({ request }) => {
-  const form = await request.formData();
+// Custom phone validator
+const phoneValidator = refine(number(), 'phone', (value) => {
+  return (
+    String(value).length >= 10 || 'Phone number must be at least 10 digits.'
+  );
+});
 
-  const formToJSON = {};
-  for (const [key, value] of [...form.entries()]) {
-    formToJSON[key] = value;
+// Custom password validator
+const passwordValidator = refine(
+  nonEmptyString('Password'),
+  'password',
+  (value) => {
+    return value.length >= 6 || 'Password must be at least 6 characters long.';
   }
-  formToJSON.phone = parseFloat(formToJSON.phone);
-  console.log(formToJSON);
+);
+
+const FormSchema = object({
+  name: nonEmptyString('Name'),
+  email: emailValidator,
+  phone: refine(number(), 'phone', (value) => {
+    return value
+      ? String(value).length >= 10 || 'Phone number must be at least 10 digits.'
+      : 'Phone number is required.';
+  }),
+  password: passwordValidator,
+});
+
+export async function formAction({ request }) {
+  const formData = Object.fromEntries(await request.formData());
+  formData.phone = Number(formData.phone); // Ensure phone is treated as a number
+  console.log(formData);
 
   try {
-    assert(formToJSON, articleSchema);
-    return redirect('/');
-  } catch (e) {
-    console.log(e);
-    let errors = {};
-    const { key, value, type, name } = e;
-    if (type === 'email') {
-      const error = new Error(`email prst`);
-      error.attribute = key;
-      errors[error.attribute] = error.message;
-    }
-
-    if (value === undefined) {
-      const error = new Error(`user_${key}_required`);
-      error.attribute = key;
-      errors[error.attribute] = error.message;
-    }
-
-    if (type === 'never') {
-      const error = new Error(`camp inexistent`);
-      error.attribute = key;
-      errors[error.attribute] = error.message;
-    }
-
-    const error = new Error(`format invalid`);
-    error.attribute = key;
-    error.value = value;
-    errors[error.attribute] = error.message;
-
-    return errors;
+    assert(formData, FormSchema);
+    return console.log('awesome');
+  } catch (error) {
+    const errors = {};
+    error.failures().forEach((failure) => {
+      errors[failure.path[0]] = failure.message;
+    });
+    return { errors };
   }
-};
+}
 const Superstruct = () => {
-  const errors = useActionData();
-  console.log('errors', errors);
+  const data = useActionData();
+  const { errors } = data || {};
 
   return (
     <section className='superstruct-page dead-center-page'>
@@ -73,24 +75,12 @@ const Superstruct = () => {
         </div>
         <div className='form-row'>
           <label htmlFor='name'>name</label>
-          <input
-            className='input '
-            type='text'
-            name='name'
-            id='name'
-            required
-          />
+          <input className='input ' type='text' name='name' id='name' />
           {errors?.name && <small className='error-msg'>{errors?.name}</small>}
         </div>
         <div className='form-row'>
           <label htmlFor='email'>email</label>
-          <input
-            className='input'
-            name='email'
-            type='email'
-            id='email'
-            required
-          />
+          <input className='input' name='email' type='email' id='email' />
           {errors?.email && (
             <small className='error-msg'>{errors?.email}</small>
           )}
@@ -102,7 +92,6 @@ const Superstruct = () => {
             className='input'
             name='password'
             type='password'
-            required
           />{' '}
           {errors?.password && (
             <small className='error-msg'>{errors?.password}</small>
@@ -110,13 +99,7 @@ const Superstruct = () => {
         </div>
         <div className='form-row'>
           <label htmlFor='phone'>phone no</label>
-          <input
-            className='input'
-            id='phone'
-            name='phone'
-            type='number'
-            required
-          />{' '}
+          <input className='input' id='phone' name='phone' type='number' />{' '}
           {errors?.phone && (
             <small className='error-msg'>{errors?.phone}</small>
           )}
