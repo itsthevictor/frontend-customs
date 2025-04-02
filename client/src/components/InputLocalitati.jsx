@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Form } from 'react-router-dom';
 import * as cities from '../../../utils/localitati.json';
 
-console.log(cities);
 const InputLocalitati = () => {
   const [selectedCounty, setSelectedCounty] = useState('');
   const [countyQuery, setCountyQuery] = useState('');
@@ -32,6 +31,7 @@ const InputLocalitati = () => {
 
   // Update city list when a county is selected
   useEffect(() => {
+    setCityQuery('');
     const citiesInCounty = cities.judete.filter(
       (item) => item.nume === selectedCounty
     );
