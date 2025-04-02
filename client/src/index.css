@@ -325,3 +325,37 @@ h6 {
 .form-subtitle {
   color: var(--grey-300);
 }
+
+/* Style the dropdown container */
+.autocomplete-dropdown {
+  position: absolute;
+  background: white;
+  /* border: 1px solid #ccc; */
+  max-height: 150px;
+  overflow-y: auto;
+  list-style: none;
+  margin-top: 48px;
+  padding: 0;
+  width: 79%;
+
+  z-index: 1000;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  box-shadow: var(--shadow-3);
+  border-radius: var(--round-sm);
+}
+
+/* Style each dropdown item */
+.autocomplete-item {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none; /* Remove underline */
+  background-color: white;
+  transition: background-color 0.2s ease;
+}
+
+/* Highlight item on hover */
+.autocomplete-item:hover {
+  background-color: #f0f0f0;
+}

@@ -5,6 +5,7 @@ import Superstruct, { formAction } from './pages/Superstruct';
 import Home from './pages/Home';
 import Header from './components/Header';
 import Main from './layouts/Main';
+import SelectCity from './pages/SelectCity';
 
 function App() {
   const router = createBrowserRouter([
@@ -28,6 +29,11 @@ function App() {
         {
           path: 'superstruct',
           element: <Superstruct />,
+          action: formAction,
+        },
+        {
+          path: 'select-city',
+          element: <SelectCity />,
           action: formAction,
         },
       ],

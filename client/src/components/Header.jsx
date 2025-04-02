@@ -11,7 +11,8 @@ const Header = () => {
         <div className='header-menu'>
           <NavLink to='alert'>Sweet alert</NavLink>
           <NavLink to='drag-and-drop'>Drag and drop</NavLink>
-          <NavLink to='superstruct'>Superstruct</NavLink>
+          <NavLink to='superstruct'>Superstruct</NavLink>{' '}
+          <NavLink to='select-city'>City Select</NavLink>
         </div>
       </div>
     </header>
