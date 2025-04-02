@@ -9,6 +9,7 @@ const InputLocalitati = () => {
   const [cityList, setCityList] = useState([]);
   const [cityQuery, setCityQuery] = useState('');
   const [filteredCities, setFilteredCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState('');
 
   // Normalize strings to handle diacritics
   const normalizeString = (str) =>
@@ -67,6 +68,7 @@ const InputLocalitati = () => {
 
   const handleSelectCity = (cityName) => {
     setCityQuery(cityName); // Set the selected city
+    setSelectedCity(cityName); //
     setFilteredCities([]); // Hide the dropdown
   };
 
@@ -87,7 +89,7 @@ const InputLocalitati = () => {
           onChange={(e) => handleFindCounty(e.target.value)}
           autoComplete='off'
         />
-        {countyQuery.length > 1 && (
+        {countyQuery.length >= 1 && (
           <ul className='autocomplete-dropdown'>
             {filteredCounties.map((item, i) => (
               <li
@@ -112,16 +114,13 @@ const InputLocalitati = () => {
           onChange={(e) => handleFindCity(e.target.value)}
           autoComplete='off'
         />
-        {cityQuery.length > 1 && (
+        {cityQuery.length >= 1 && (
           <ul className='autocomplete-dropdown'>
             {filteredCities.map((item, i) => (
               <li
                 className='autocomplete-item'
                 key={i}
-                onClick={() => {
-                  setCityQuery(item.nume); // Set the selected city
-                  setFilteredCities([]); // Hide the dropdown
-                }}
+                onClick={() => handleSelectCity(item.nume)}
               >
                 {item.nume}
               </li>
@@ -131,7 +130,12 @@ const InputLocalitati = () => {
       </div>
 
       <div className='btn-row'>
-        <button className='btn form-btn'>Submit</button>
+        <button
+          className='btn form-btn'
+          disabled={selectedCity === '' || selectedCity === ''}
+        >
+          Submit
+        </button>
       </div>
     </Form>
   );
