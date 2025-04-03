@@ -60,10 +60,10 @@ jobs:
       - name: Google Cloud Auth
         uses: 'google-github-actions/auth@v2'
         with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+          credentials_json: '${{ secrets.GSP_SA_KEY }}'
 
       - name: Debug Secrets
-        run: echo "${{ secrets.GCP_SA_KEY }}"
+        run: echo "${{ secrets.GSP_SA_KEY }}"
         shell: bash
 
       # - id: 'auth'
